@@ -1,0 +1,148 @@
+https://wifizoo.org/2023/07/03/clearpass-intune-and-mac-randomisation/#comment-12130
+https://github.com/muink/luci-app-netdata
+https://wifizoo.org/2023/05/12/yet-another-ser2net-tutorial/
+https://bugworkshop.blogspot.com/2013/04/diy-ser2net.html
+
+這個情境我懂了，而且你這個是**標準 FAE / 量產初始化流程**，不是網路理論題 👍
+我直接給你 **「真的在現場可用、穩定、不會搞錯設備」的方法**。
+
+---
+
+# 🎯 你的目標（我幫你重新定義一次）
+
+* 所有設備 **出廠預設 IP 都一樣**（例如 `192.168.1.10`）
+* **同一時間只能接一顆或多顆**
+* 你要：
+
+  1. 明確指定「現在設定的是哪一顆」（靠 MAC）
+  2. 幫它改成 **業主指定的新 IP / 網段**
+  3. 一顆一顆做，不會誤刷
+
+---
+
+## ✅ 最穩定、最常用的方法（強烈建議）
+
+## **方法 A：ARP 綁 MAC → 設定 → 解除（FAE 標準）**
+
+### 🔁 每一顆設備的標準流程
+
+### ① 先看到所有「預設 IP 的設備」
+
+```bash
+arp-scan --localnet | grep 192.168.1.10
+```
+
+你會看到類似：
+
+```
+192.168.1.10  aa:bb:cc:dd:ee:01
+192.168.1.10  aa:bb:cc:dd:ee:02
+```
+
+---
+
+### ② **指定你要設定的那一顆（靠 MAC）**
+
+```bash
+sudo ip neigh replace 192.168.1.10 lladdr aa:bb:cc:dd:ee:01 dev eth0 nud permanent
+```
+
+📌 從現在開始：
+
+* 你連 `192.168.1.10`
+* **只會連到這顆 MAC**
+
+---
+
+### ③ 連進去設定新 IP（SSH / Web / API）
+
+```bash
+ssh root@192.168.1.10
+```
+
+例：
+
+```bash
+uci set network.lan.ipaddr=10.20.30.5
+uci set network.lan.netmask=255.255.255.0
+uci commit network
+/etc/init.d/network restart
+```
+
+或 netplan / ifconfig / vendor CLI（依設備）
+
+---
+
+### ④ 清掉 ARP 綁定（非常重要）
+
+```bash
+sudo ip neigh del 192.168.1.10 dev eth0
+```
+
+---
+
+### ⑤ 換下一顆設備，重複 ②～④
+
+---
+
+## ✅ 方法 B：一顆一顆接（最安全、最慢）
+
+* 只插 **一顆設備**
+* 設完 → 換下一顆
+
+📌 優點：零風險
+📌 缺點：慢
+
+---
+
+## ⚠️ 不建議的方法（會出事）
+
+| 方法            | 為什麼不行     |
+| ------------- | --------- |
+| 同時多顆 + 不綁 ARP | 一定刷錯      |
+| 用 ping 碰運氣    | ARP 會亂跳   |
+| 靠 hostname    | 預設都一樣     |
+| 靠瀏覽器          | cache 會騙你 |
+
+---
+
+## 🧰 我幫你進階一點（自動化）
+
+### 🔧 一行「指定 MAC → 設 IP」腳本（範例）
+
+```bash
+#!/bin/sh
+MAC="$1"
+NEW_IP="$2"
+IFACE="eth0"
+DEFAULT_IP="192.168.1.10"
+
+ip neigh replace $DEFAULT_IP lladdr $MAC dev $IFACE nud permanent
+ssh root@$DEFAULT_IP "set-ip $NEW_IP"
+ip neigh del $DEFAULT_IP dev $IFACE
+```
+
+用法：
+
+```bash
+./provision.sh aa:bb:cc:dd:ee:01 10.20.30.5
+```
+
+---
+
+## 🧠 量產等級建議（如果你要再升級）
+
+* DHCP server：**依 MAC 發臨時 IP**
+* AC 掃描 AP MAC → 發設定
+* 開機後自動換 IP（避免預設 IP 永久存在）
+
+---
+
+## 我可以再幫你做的事
+
+* ✅ 幫你寫 **完整初始化工具（menu / CLI）**
+* ✅ 幫你設計 **AC 自動配對 AP（不靠 IP）**
+* ✅ 幫你把這套流程寫進 README / SOP
+
+只要一句話跟我說：
+👉 **「我要自動化腳本版」或「我要 SOP 文件版」**
