@@ -3,6 +3,10 @@ https://github.com/muink/luci-app-netdata
 https://wifizoo.org/2023/05/12/yet-another-ser2net-tutorial/
 https://bugworkshop.blogspot.com/2013/04/diy-ser2net.html
 
+https://www.freepik.com/icons/gateway#uuid=c06a22e1-197b-4be4-b9d7-99f212f6d522
+https://jamespolik.pixnet.net/blog/posts/17347613100
+https://deepwiki.com/Telecominfraproject/wlan-cloud-userportal/8-external-service-integration
+
 這個情境我懂了，而且你這個是**標準 FAE / 量產初始化流程**，不是網路理論題 👍
 我直接給你 **「真的在現場可用、穩定、不會搞錯設備」的方法**。
 
@@ -128,17 +132,12 @@ ip neigh del $DEFAULT_IP dev $IFACE
 ./provision.sh aa:bb:cc:dd:ee:01 10.20.30.5
 ```
 
----
 
 ## 🧠 量產等級建議（如果你要再升級）
 
 * DHCP server：**依 MAC 發臨時 IP**
 * AC 掃描 AP MAC → 發設定
 * 開機後自動換 IP（避免預設 IP 永久存在）
-
----
-
-## 我可以再幫你做的事
 
 * ✅ 幫你寫 **完整初始化工具（menu / CLI）**
 * ✅ 幫你設計 **AC 自動配對 AP（不靠 IP）**
