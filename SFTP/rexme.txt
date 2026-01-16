@@ -1,0 +1,26 @@
+符合AP的包
+openssh-sftp-server_9.8p1-1_aarch64_cortex-a53.ipk
+tar -xzvf openssh-sftp-server_9.8p1-1_aarch64_cortex-a53.ipk -C /Applications/系統類rex/元元/
+ x ./debian-binary
+x ./data.tar.gz
+x ./control.tar.gz
+
+##### tar -xzvf  data.tar.gz -C /Applications/系統類rex/元元/sftp_eap105/step3_data/
+./
+./usr/
+./usr/lib/
+./usr/lib/sftp-server
+./usr/libexec/
+./usr/libexec/sftp-server
+
+####
+tar -xzvf /tmp/data.tar.gz -C
+
+admin@EAP105:/tmp# wget http://192.168.2.111:8000/openssh-sftp-server_9.8p1-1_aarch64_cortex-a53.ipk -P /tmp/
+Downloading 'http://192.168.2.111:8000/openssh-sftp-server_9.8p1-1_aarch64_cortex-a53.ipk'
+Connecting to 192.168.2.111:8000
+Writing to 'openssh-sftp-server_9.8p1-1_aarch64_cortex-a53.ipk'
+openssh-sftp-server_ 100% |*******************************| 62691   0:00:00 ETA
+Download completed (62691 bytes)
+解壓後再包回去
+
