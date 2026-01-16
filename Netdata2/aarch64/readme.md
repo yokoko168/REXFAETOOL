@@ -6,7 +6,13 @@
 
 ## 🛠️ V2AC（控制器一鍵安裝）
 ```bash
-cd /tmp && (curl -k -L -o ac.tar.gz "https://github.com/yokoko168/REXFAETOOL/raw/refs/heads/main/Netdata2/aarch64/netdata-controller-aarch64.tar.gz" || wget --no-check-certificate -O ac.tar.gz "https://github.com/yokoko168/REXFAETOOL/raw/refs/heads/main/Netdata2/aarch64/netdata-controller-aarch64.tar.gz") && tar -zxvf ac.tar.gz -C / && chmod +x /usr/sbin/netdata && /usr/sbin/netdata && echo "✅ AC OK!"
+cd /tmp && \
+(curl -k -L -o ac.tar.gz https://github.com/yokoko168/REXFAETOOL/raw/refs/heads/main/Netdata2/aarch64/netdata-controller-aarch64.tar.gz || \
+ wget --no-check-certificate -O ac.tar.gz https://github.com/yokoko168/REXFAETOOL/raw/refs/heads/main/Netdata2/aarch64/netdata-controller-aarch64.tar.gz) && \
+tar -xzf ac.tar.gz -C / && \
+chmod +x /usr/sbin/netdata && \
+/usr/sbin/netdata && \
+echo AC_OK
 ```
 
 ## 📡 V2AP（基地台一鍵安裝）
