@@ -7,3 +7,5 @@ curl -k -L "https://github.com/crazywhalecc/static-php-cli/releases/download/2.8
 
 https://github.com/pmmp/PHP-Binaries/releases/tag/pm5-php-8.3-latest
 https://github.com/crazywhalecc/static-php-cli/releases
+
+https://wpoki.com/php-version-check-switch/
