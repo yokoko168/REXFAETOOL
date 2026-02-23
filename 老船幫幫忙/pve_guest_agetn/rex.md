@@ -16,3 +16,4 @@ https://raw.githubusercontent.com/yokoko168/REXFAETOOL/main/%E8%80%81%E8%88%B9%E
 
 
 同理，install-guest.sh、install-pve.sh 如果也在同目錄，就用同一種 raw 格式。
+<img width="1509" height="280" alt="image" src="https://github.com/user-attachments/assets/773cb1da-cecd-409d-a3d3-b18d0f6c7a6c" />
