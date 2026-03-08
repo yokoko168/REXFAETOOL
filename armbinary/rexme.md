@@ -1,0 +1,2 @@
+sftp
+strace
